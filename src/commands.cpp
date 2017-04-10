@@ -2849,6 +2849,11 @@ void CommandPubKeyRequest::procresult()
                     break;
 
                 case EOO:
+                    if (!u) // user has cancelled the account
+                    {
+                        return;
+                    }
+
                     if (!ISUNDEF(uh))
                     {
                         client->mapuser(uh, u->email.c_str());
@@ -2890,21 +2895,23 @@ void CommandPubKeyRequest::procresult()
         u->pkrs.pop_front();
     }
 
-    bool isTempUser = (u != client->finduser(u->userhandle) &&
-            u != client->finduser(u->email.c_str()));
-
-    if (len_pubk && !isTempUser)
+    if (len_pubk && !u->isTemporary)
     {
         client->notifyuser(u);
     }
 
-    if (isTempUser)
+    if (u->isTemporary)
     {
         delete u;
         u = NULL;
     }
 
     return;
+}
+
+void CommandPubKeyRequest::invalidateUser()
+{
+    u = NULL;
 }
 
 CommandGetUserData::CommandGetUserData(MegaClient *client)
