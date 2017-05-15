@@ -124,8 +124,8 @@ class LoginCommand extends Command
     {
         $this->setName('login');
         $this->setDescription('Log in to a MEGA account');
-        $this->addArgument('email', InputArgument::REQUIRED, 'Email of the account');
-        $this->addArgument('password', InputArgument::REQUIRED, 'Password of the account');
+        $this->addArgument('email', InputArgument::REQUIRED, 'khatawoot.cctv@gmail.com');
+        $this->addArgument('password', InputArgument::REQUIRED, 'weesex00');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
